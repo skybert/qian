@@ -1,8 +1,5 @@
 # Command that shows you what you've spent money on
 
-The categories are a number of `.txt` files. Each line in the category
-text file represents a shop.
-
 Example usage: 
 
 ```
@@ -23,6 +20,10 @@ $ qian ~/tmp/transactions-from-bank.csv [<month>]
   "various": 9529
 }
 ```
+
+The categories and shops to which these belong are defined in [a
+number of `.txt` files](categories). Each line in the category text
+file represents a shop. Nice and easy.
 
 ## Licence 
 
