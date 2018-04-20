@@ -26,7 +26,7 @@ $ qian ~/tmp/transactions-from-bank.csv [<month>]
 
 ## Licence 
 
-Licensed under the [GPL v3](LICENCE)
+Licensed under the [GPL v3](LICENSE)
 
 ## What does qian mean?
 
