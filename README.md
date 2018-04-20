@@ -3,7 +3,7 @@
 Example usage: 
 
 ```
-$ qian ~/tmp/transactions-from-bank.csv [<month>]
+$ ./bin/qian ~/tmp/transactions-from-bank.csv [<month>]
 {
   "car": -1044,
   "wine": -460.9,
@@ -24,6 +24,11 @@ $ qian ~/tmp/transactions-from-bank.csv [<month>]
 The categories and shops to which these belong are defined in [a
 number of `.txt` files](categories). Each line in the category text
 file represents a shop. Nice and easy.
+
+## Dependencies
+The only dependency is [Python 3](http://python.org). No extra
+libraries are needed, hence no virtual environments, `pip install`s or
+indeed Docker containers. Lean and mean `qian` is! 😉
 
 ## Licence 
 
