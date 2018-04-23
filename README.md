@@ -2,8 +2,11 @@
 
 Example usage: 
 
+```text
+$ ./bin/qian transactions-from-bank.csv [<month>]
 ```
-$ ./bin/qian ~/tmp/transactions-from-bank.csv [<month>]
+
+```yaml
 {
   "car": -1044,
   "wine": -460.9,
