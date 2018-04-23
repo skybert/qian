@@ -3,7 +3,10 @@
 Example usage: 
 
 ```
-$ ./bin/qian ~/tmp/transactions-from-bank.csv [<month>]
+$ ./bin/qian transactions-from-bank.csv [<month>]
+```
+
+```yaml
 {
   "car": -1044,
   "wine": -460.9,
@@ -25,10 +28,18 @@ The categories and shops to which these belong are defined in [a
 number of `.txt` files](categories). Each line in the category text
 file represents a shop. Nice and easy.
 
-## Dependencies
-The only dependency is [Python 3](http://python.org). No extra
-libraries are needed, hence no virtual environments, `pip install`s or
-indeed Docker containers. Lean and mean `qian` is! 😉
+## Installation
+
+```
+$ git clone https://github.com/skybert/qian.git
+$ cd qian
+$ docker build -t skybert.net/qian
+```
+
+You can now run `qian` with:
+```
+$ ./bin/qian <csv>
+```
 
 ## Licence 
 

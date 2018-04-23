@@ -1,97 +1,18 @@
-#! /usr/bin/python3
+#! /usr/bin/env bash
 
-from datetime import datetime
-import os.path
-import os
-import sys
-import json
+csv=$1
 
+tag=skybert.net/qian
+if [ -f "${csv}" ]; then
+  d=$(dirname "${csv}")
+  volumes="
+    --volume ${d}:${d}
+  "
+fi
 
-def find_category(categories, description):
-  for category in categories:
-    for shop in category["shops"]:
-      if shop.lower() in description.lower():
-        return category["name"]
-  return "various"
-
-
-def is_correct_month(correct_date, record):
-  d = datetime.strptime(record["date"], "%d.%m.%Y")
-  return d.year == correct_date.year and d.month == correct_date.month
-
-
-def what_are_we_spending_money_on(fn, categories, correct_date):
-  overview = {
-    "month": correct_date.strftime("%B %Y"),
-    "records": {}
-  }
-
-  with open(fn) as f:
-    i = 0
-    for line in f:
-
-      # ignore the first line
-      if i == 0:
-        i += 1
-        continue
-
-      fields = line.split("\t")
-      record = {
-        "date": fields[0],
-        "description": fields[2].strip(),
-        "amount": fields[3].strip()
-      }
-
-      if not is_correct_month(correct_date, record):
-        continue
-
-      category = find_category(categories, record["description"])
-      record["category"] = category
-
-      if category not in overview["records"]:
-        overview["records"][category] = []
-      overview["records"][category].append(record)
-
-      # if category == "various":
-      #  print("uncategorised record=" + str(record))
-
-      if category in overview:
-        overview[category] += float(record["amount"])
-      else:
-        overview[category] = float(record["amount"])
-
-  print(json.dumps(overview))
-
-
-def get_categories():
-  categories = []
-
-  categories_dir = os.path.join(
-    os.path.abspath(
-      os.path.join(os.path.dirname(sys.argv[0]), os.pardir)),
-    "categories"
-  )
-
-  for root, dirs, files in os.walk(categories_dir):
-    for fn in files:
-      if fn.endswith(".txt"):
-        f = os.path.join(categories_dir, fn)
-        with open(f, 'r') as f:
-          category = {
-            "name": os.path.splitext(fn)[0],
-            "shops": [l.strip() for l in f.readlines()]
-          }
-          categories.append(category)
-
-  return categories
-
-
-if __name__ == "__main__":
-  fn = sys.argv[1]
-  if len(sys.argv) == 3:
-    correct_date = datetime.strptime(sys.argv[2], "%Y-%m")
-  else:
-    correct_date = datetime.now()
-
-  categories = get_categories()
-  what_are_we_spending_money_on(fn, categories, correct_date)
+docker \
+  run \
+  -ti \
+  ${volumes} \
+  "${tag}" \
+  "$@"
